@@ -53,7 +53,7 @@ inputs = processor(
 inputs = inputs.to("cuda")
 
 # Inference: Generation of the output
-generated_ids = model.generate(**inputs, max_new_tokens=256)
+generated_ids = model.generate(**inputs, max_new_tokens=128)
 generated_ids_trimmed = [
     out_ids[len(in_ids) :] for in_ids, out_ids in zip(inputs.input_ids, generated_ids)
 ]
@@ -61,3 +61,12 @@ output_text = processor.batch_decode(
     generated_ids_trimmed, skip_special_tokens=True, clean_up_tokenization_spaces=False
 )
 print(output_text)
+
+"""
+['The video features a series of close-up shots showcasing individuals enjoying a chocolate bar labeled "Nestlé Crunch." 
+The first individual, wearing a light-colored shirt, is seen holding the chocolate bar and appears to be speaking or reacting 
+positively to it. The second person, dressed in a baseball uniform with a cap, also holds the same chocolate bar and seems to 
+be expressing enjoyment. Both scenes are set outdoors, with natural lighting and greenery visible in the background.\n\nThe 
+third shot focuses on the chocolate bar itself, highlighting its packaging and the brand name "Nestlé Crunch" prominently 
+displayed. The final scene shows another individual, wearing a yellow']
+"""

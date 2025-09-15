@@ -61,3 +61,11 @@ output_text = processor.batch_decode(
     generated_ids_trimmed, skip_special_tokens=True, clean_up_tokenization_spaces=False
 )
 print(output_text)
+
+"""
+['The image depicts a serene rural landscape under a clear blue sky. In the foreground, there is a lush green field that 
+stretches out to meet a line of yellow flowers, possibly rapeseed or canola, which adds a vibrant contrast to the greenery. 
+Dominating the center of the image is a solitary tree with a thick trunk and a full canopy of bright green leaves, 
+suggesting it is in full bloom. The overall scene conveys a sense of tranquility and natural beauty, typical of a peaceful 
+countryside setting.']
+"""
