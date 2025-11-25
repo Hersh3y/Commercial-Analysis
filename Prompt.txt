@@ -1,0 +1,116 @@
+Analyze this video and transcript to answer each question specifically and directly.
+
+**ANALYSIS TASKS:**
+
+1. CELEBRITIES
+List any celebrities or public figures visible. Format: [Name] - [context/role in video]
+If none, respond: "None identified"
+
+2. PEOPLE COUNT
+Exact number of distinct individuals visible in video: [NUMBER]
+If crowd/unclear, provide: [approximate range] (e.g., "~15-20 people")
+
+3. GENDER
+List each person's apparent gender presentation:
+Person 1: [Male/Female/Not clearly visible]
+Person 2: [Male/Female/Not clearly visible]
+Format: [Person number/identifier]: [Gender]
+
+4. ETHNICITY
+Describe observed ethnic/racial characteristics per person:
+Person 1: [Specific observable characteristics - e.g., "Light skin tone, blonde hair" OR "Dark skin tone" OR "East Asian appearance"]
+Person 2: [Observable characteristics]
+Use descriptive physical traits, not demographic labels.
+5. ACTIVITIES
+List all visible activities/sports:
+- [Activity 1]: [brief description]
+- [Activity 2]: [brief description]
+Include location/setting context.
+
+6. TRANSCRIPT ANALYSIS
+Main topics discussed (if transcript available):
+- Topic 1: [specific detail]
+- Topic 2: [specific detail]
+- Topic 3: [specific detail]
+Key speakers (if identifiable): [names or descriptions]
+If no transcript: "No transcript available"
+
+**TRANSCRIPT PROVIDED:**
+{transcript}
+
+**RESPONSE INSTRUCTIONS:**
+- Answer only what you observe
+- Be specific, not vague
+- Use exact numbers where possible
+- Describe visible characteristics objectively
+- Do not speculate
+- Label each answer with its number
+
+
+
+
+
+
+
+
+PROMPT v2
+
+
+            questions = f"""Analyze this video and transcript to answer each question specifically and directly.
+
+**ANALYSIS TASKS:**
+
+1. CELEBRITIES
+List any celebrities or public figures visible. Format: [Name] - [context/role in video]
+If none, respond: "None identified"
+
+2. PEOPLE COUNT
+Exact number of distinct individuals visible in video: [NUMBER]
+If crowd/unclear, provide: [approximate range] (e.g., "~15-20 people")
+
+3. GENDER
+List each person's apparent gender presentation:
+Person 1: [Male/Female/Not clearly visible]
+Person 2: [Male/Female/Not clearly visible]
+Format: [Person number/identifier]: [Gender]
+
+4. ETHNICITY
+Describe observed ethnic/racial characteristics per person:
+Person 1: [Specific observable characteristics - e.g., "Light skin tone" OR "Dark skin tone" OR "East Asian appearance"]
+Person 2: [Observable characteristics]
+Use descriptive physical traits, not demographic labels.
+
+5. ACTIVITIES
+List all visible activities/sports:
+- [Activity 1]: [brief description]
+- [Activity 2]: [brief description]
+Include location/setting context.
+
+6. TRANSCRIPT ANALYSIS
+Main topics discussed (if transcript available):
+- Topic 1: [specific detail]
+- Topic 2: [specific detail]
+- Topic 3: [specific detail]
+Key speakers (if identifiable): [names or descriptions]
+If no transcript: "No transcript available"
+
+7. BRAND/PRODUCT
+Identify the product or service being advertised along with the name of brand. 
+Response should be <Name of the Brand><Name of sub-brand if present><Product/Service>
+
+8. LOGO APPEARANCE COUNT
+Does the advertised brand or logo appear throughout the entire video? If not how many times does it appear?	
+
+9. THEME
+What is the ad trying to communicate about the brand, service, or product
+
+**TRANSCRIPT PROVIDED:**
+{transcript}
+
+**RESPONSE INSTRUCTIONS:**
+- Answer only what you observe
+- Be specific, not vague
+- Use exact numbers where possible
+- Describe visible characteristics objectively
+- Do not speculate
+- Label each answer with its number"""

@@ -3,6 +3,7 @@ import torch
 import ffmpeg
 import soundfile as sf
 import gc
+import time  # <-- for timing
 from pathlib import Path
 from transformers import (
     AutoModelForSpeechSeq2Seq, 
@@ -23,6 +24,9 @@ def clear_memory():
 device = "cuda:0" if torch.cuda.is_available() else "cpu"
 torch_dtype = torch.float16
 
+# Track total script start time
+script_start_time = time.time()
+
 # Video folder
 videos_folder = "videos"
 os.makedirs(videos_folder, exist_ok=True)
@@ -34,7 +38,7 @@ if not video_files:
     print(f"No MP4 files found in '{videos_folder}' folder")
     exit()
 
-print(f"Found {len(video_files)} video(s) to process\n")
+print(f"Found {len(video_files)} videos to process\n")
 
 # Load Whisper model once (outside the loop)
 model_id = "openai/whisper-large-v3"
@@ -69,6 +73,8 @@ qwen_processor = AutoProcessor.from_pretrained("Qwen/Qwen2.5-VL-7B-Instruct")
 
 # Process each video
 for idx, video_file in enumerate(video_files, 1):
+    start_time = time.time()  # start timing for this video
+
     video_path = str(video_file)
     video_filename = video_file.name
     # Save analysis file in script directory, not videos folder
@@ -118,13 +124,12 @@ for idx, video_file in enumerate(video_files, 1):
             
             # Prepare questions
             questions = f"""Analyze the video and give well-detailed and accurate answers to the following questions:
-1. Is there a celebrity present in the video? If so, who?
-2. How many humans appear (exact number of unique humans) in the video?
+1. Is there a celebrity present in the video? If so, what is their name?
+2. How many humans appear in the video?
 3. What is the gender of the humans shown in the video?
 4. What is the ethnicity of any celebrities shown in the video?
 5. What main activities are shown in the video?
-6. Who is the protagonist of the video?
-Transcript: [{transcript}]"""
+Transcript: {transcript}"""
             
             # Messages
             messages = [
@@ -191,7 +196,10 @@ Transcript: [{transcript}]"""
             if os.path.exists(audio_path):
                 os.remove(audio_path)
         
-        print(f"Completed: {output_file}\n")
+        # Print timing for this video
+        end_time = time.time()
+        elapsed_time = end_time - start_time
+        print(f"Completed: {output_file} | Time: {elapsed_time:.2f} seconds\n")
         
     except Exception as e:
         print(f"Error processing {video_filename}: {str(e)}\n")
@@ -202,4 +210,6 @@ del whisper_model, whisper_processor, whisper_pipe
 del qwen_model, qwen_processor
 clear_memory()
 
-print(f"\nAll done! Processed {len(video_files)} video(s).")
+# Print total runtime (seconds only)
+total_time = time.time() - script_start_time
+print(f"\nDone. Processed {len(video_files)} videos.")
