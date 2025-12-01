@@ -19,13 +19,13 @@ from transformers import (
 from qwen_vl_utils import process_vision_info
 from awq import AutoAWQForCausalLM
 
-# Clears 
+# Clear memory
 def clear_memory():
     gc.collect()
     torch.cuda.empty_cache()
     torch.cuda.synchronize()
 
-# Setup device and precision
+# Setup device
 device = "cuda:0" if torch.cuda.is_available() else "cpu"
 torch_dtype = torch.bfloat16
 
@@ -77,11 +77,14 @@ qwen_processor = AutoProcessor.from_pretrained("Qwen/Qwen2.5-VL-72B-Instruct-AWQ
 
 # Process each video
 for idx, video_file in enumerate(video_files, 1):
-    start_time = time.time()  # start timing for this video
+
+    # starts time
+    start_time = time.time()
 
     video_path = str(video_file)
     video_filename = video_file.name
-    # Save analysis file in script directory
+
+    # Save results file
     output_file = os.path.splitext(video_filename)[0] + "_analysis.txt"
     
     print(f"[{idx}/{len(video_files)}] Processing: {video_filename}")
@@ -122,8 +125,8 @@ for idx, video_file in enumerate(video_files, 1):
             # Clear memory before vision analysis
             clear_memory()
             
-            # Prepare questions
-            questions = f"""Analyze this video and transcript to answer each question specifically and directly.
+            # prompt
+            prompt = f"""Analyze this video and transcript to answer each question specifically and directly.
 
 **ANALYSIS TASKS:**
 
@@ -181,7 +184,7 @@ What is the ad trying to communicate about the brand, service, or product
                             "fps": 3.0,
                             "duration": 35,
                         },
-                        {"type": "text", "text": questions},
+                        {"type": "text", "text": prompt},
                     ],
                 }
             ]
@@ -203,7 +206,7 @@ What is the ad trying to communicate about the brand, service, or product
             # Generation
             generated_ids = qwen_model.generate(
                 **inputs, 
-                # Don't make this too low
+                # Don't make this too low, maybe switch to 512
                 max_new_tokens=384,
                 do_sample=False,
                 temperature=0.1,
@@ -251,8 +254,10 @@ What is the ad trying to communicate about the brand, service, or product
 # Clean up models at the end
 del whisper_model, whisper_processor, whisper_pipe
 del qwen_model, qwen_processor
+
+# clear memory
 clear_memory()
 
-# Print total runtime (seconds only)
+# Print total runtime in seconds
 total_time = time.time() - script_start_time
 print(f"\nDone. Processed {len(video_files)} videos.")
