@@ -126,38 +126,38 @@ for idx, video_file in enumerate(video_files, 1):
             clear_memory()
             
             # prompt
-            prompt = f"""Analyze this video and transcript to answer each question specifically and directly.
+            prompt = f"""
+Analyze this video and transcript to answer each question specifically and directly.
 
 **ANALYSIS TASKS:**
 
 1. CELEBRITIES
-List any celebrities or public figures visible. Format: [Name] - [context/role in video]
+List any celebrities or public figures visible.
+Format: [Name] - [Occupation] - [Context/role in video]
 If none, respond: "None identified"
 
 2. PEOPLE COUNT
-Exact number of distinct individuals visible in video: [NUMBER]
-If crowd/unclear, provide: [approximate range] (e.g., "~15-20 people")
+Identify exact number of distinct individual humans visible in video. 
+Response should be a whole number. 
+If there is a crowd, provide the closest approximate number (e.g., "~15-20 people").
 
 3. GENDER
-List each person's apparent gender presentation:
-Person 1: [Male/Female/Not clearly visible]
-Person 2: [Male/Female/Not clearly visible]
-Format: [Person number/identifier]: [Gender]
+Identify the gender of Human 1, Human 2, Human 3 and Human 4 within the video as identified in previous question. 
+Categorize gender as Male, Female, Binary or Unclear. In case of no zero humans or crowd of humans, response should be "NA". 
+In case of presence of humans, response should be: 
+Human 1: <Human 1 Gender>; 
+Human 2: <Human 2 gender if Human 2 was identified, else NA>;  
+Human 3: <Human 3 gender if Human 3 was identified, else NA>;  
+Human 4: <Human 4 gender if Human 4 was identified, else NA>.
 
-4. ACTIVITIES
-List all visible activities/sports:
-- [Activity 1]: [brief description]
-- [Activity 2]: [brief description]
-Include location/setting context.
-
-5. BRAND/PRODUCT
+4. BRAND/PRODUCT
 Identify the product or service being advertised along with the name of brand. 
 Response should be <Name of the Brand><Name of sub-brand if present><Product/Service>
 
-6. LOGO APPEARANCE COUNT
+5. LOGO APPEARANCE COUNT
 Does the advertised brand or logo appear throughout the entire video? If not how many times does it appear?	
 
-7. THEME
+6. THEME
 What is the ad trying to communicate about the brand, service, or product
 
 **TRANSCRIPT PROVIDED:**
