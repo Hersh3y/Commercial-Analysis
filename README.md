@@ -17,7 +17,7 @@ Place MP4 videos in the `videos/` folder and run:
 
 Results are saved as `{video_name}_analysis.txt` for each video.
 
-## Performance
+## Research Results
 
 - **Accuracy**: 81.25% (Celebrity), 100% (Brand Name & Ad Theme), 62.5% (Gender), 50% (Logo Count), 43.75% (Human Count)
 - **Processing Time**: ~41s per video (Celebrity), ~31s (Demographics), ~67s (Brand analysis)
